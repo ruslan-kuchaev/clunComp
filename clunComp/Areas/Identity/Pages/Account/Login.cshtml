@@ -1,0 +1,49 @@
+@page
+@model clunComp.Areas.Identity.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<div class="auth-page">
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>ВХОД</h1>
+            <p>Войдите в свой аккаунт</p>
+        </div>
+
+        <form id="account" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            
+            <div class="form-group">
+                <label asp-for="Input.Email">Email</label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="example@mail.com" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Input.Password">Пароль</label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="••••••••" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            
+            <div class="form-check">
+                <input class="form-check-input" asp-for="Input.RememberMe" />
+                <label class="form-check-label" asp-for="Input.RememberMe">
+                    Запомнить меня
+                </label>
+            </div>
+            
+            <button type="submit" class="btn-primary btn-full">ВОЙТИ</button>
+            
+            <div class="auth-links">
+                <a asp-page="./ForgotPassword">Забыли пароль?</a>
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Регистрация</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

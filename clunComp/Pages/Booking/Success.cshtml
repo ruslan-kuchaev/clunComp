@@ -1,0 +1,64 @@
+@page
+@model SuccessModel
+@{
+    ViewData["Title"] = "Бронирование успешно";
+}
+
+<div class="success-page">
+    <div class="success-animation">
+        <div class="success-checkmark">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#10b981" stroke-width="4"/>
+                <path d="M 30 50 L 45 65 L 70 35" fill="none" stroke="#10b981" stroke-width="6" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <h1>БРОНЬ ОФОРМЛЕНА!</h1>
+    <p class="success-message">Ваша заявка принята и ожидает подтверждения</p>
+
+    <div class="booking-summary">
+        <div class="summary-header">
+            <h2>Детали бронирования</h2>
+            <span class="booking-number">#@Model.Booking.Id</span>
+        </div>
+        
+        <div class="summary-content">
+            <div class="summary-row">
+                <span class="label">Место:</span>
+                <span class="value">@Model.Booking.Computer?.Name (@Model.Booking.Computer?.Zone)</span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Дата:</span>
+                <span class="value">@Model.Booking.BookingDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("ru-RU"))</span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Время:</span>
+                <span class="value">@Model.Booking.StartTime</span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Продолжительность:</span>
+                <span class="value">@Model.Booking.DurationHours ч.</span>
+            </div>
+            <div class="summary-row total">
+                <span class="label">Итого:</span>
+                <span class="value">@Model.Booking.TotalPrice₽</span>
+            </div>
+        </div>
+
+        <div class="summary-status">
+            <div class="status-indicator pending"></div>
+            <span>Ожидает подтверждения</span>
+        </div>
+    </div>
+
+    <div class="success-info">
+        <p>📱 Мы свяжемся с вами по номеру <strong>@Model.Booking.UserPhone</strong></p>
+        <p>⏱️ Подтверждение обычно занимает 5-10 минут</p>
+    </div>
+
+    <div class="success-actions">
+        <a href="/Booking/MyBookings" class="btn-primary">МОИ БРОНИРОВАНИЯ</a>
+        <a href="/" class="btn-secondary">НА ГЛАВНУЮ</a>
+    </div>
+</div>

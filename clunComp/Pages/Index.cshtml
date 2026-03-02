@@ -1,0 +1,116 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Киберспорт Клуб";
+}
+
+<div class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <div class="hero-badge">ПРОФЕССИОНАЛЬНЫЙ ГЕЙМИНГ</div>
+        <h1 class="hero-title">КИБЕРСПОРТ<br/>КЛУБ</h1>
+        <p class="hero-subtitle">Топовое железо • Комфортная атмосфера • Лучшие цены</p>
+        <a href="/Booking/Create" class="btn-hero">ЗАБРОНИРОВАТЬ МЕСТО</a>
+    </div>
+    <div class="hero-stats">
+        <div class="stat-item">
+            <div class="stat-number">13</div>
+            <div class="stat-label">Игровых мест</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Работаем</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">400₽</div>
+            <div class="stat-label">От/час</div>
+        </div>
+    </div>
+</div>
+
+<section class="zones-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>НАШИ ЗОНЫ</h2>
+            <p>Выберите подходящий формат игры</p>
+        </div>
+        
+        <div class="zones-grid">
+            <div class="zone-card vip-zone">
+                <div class="zone-icon">★</div>
+                <h3>VIP ЗОНА</h3>
+                <div class="zone-features">
+                    <div class="feature">RTX 4090</div>
+                    <div class="feature">360Hz мониторы</div>
+                    <div class="feature">Премиум кресла</div>
+                    <div class="feature">Приватность</div>
+                </div>
+                <div class="zone-price">800₽/час</div>
+                <a href="/Booking/Create" class="btn-zone">ЗАБРОНИРОВАТЬ</a>
+            </div>
+
+            <div class="zone-card">
+                <div class="zone-icon">⚡</div>
+                <h3>СТАНДАРТ</h3>
+                <div class="zone-features">
+                    <div class="feature">RTX 4070</div>
+                    <div class="feature">240Hz мониторы</div>
+                    <div class="feature">Удобные кресла</div>
+                    <div class="feature">Общая зона</div>
+                </div>
+                <div class="zone-price">400₽/час</div>
+                <a href="/Booking/Create" class="btn-zone">ЗАБРОНИРОВАТЬ</a>
+            </div>
+
+            <div class="zone-card ps-zone">
+                <div class="zone-icon">🎮</div>
+                <h3>PS ЗОНА</h3>
+                <div class="zone-features">
+                    <div class="feature">PlayStation 5</div>
+                    <div class="feature">4K TV 65"</div>
+                    <div class="feature">Диваны</div>
+                    <div class="feature">Расслабленная игра</div>
+                </div>
+                <div class="zone-price">500₽/час</div>
+                <a href="/Booking/Create" class="btn-zone">ЗАБРОНИРОВАТЬ</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🖥️</div>
+                <h3>Топовое железо</h3>
+                <p>Последние модели видеокарт и процессоров для максимального FPS</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Высокая скорость</h3>
+                <p>Интернет 1 Гбит/с и минимальный пинг для онлайн-игр</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎧</div>
+                <h3>Комфорт</h3>
+                <p>Игровые кресла, наушники премиум-класса и кондиционеры</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🕐</div>
+                <h3>Круглосуточно</h3>
+                <p>Работаем 24/7 без выходных и праздников</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>ГОТОВЫ К ИГРЕ?</h2>
+            <p>Забронируйте место прямо сейчас и получите лучший игровой опыт</p>
+            <a href="/Booking/Create" class="btn-cta">ЗАБРОНИРОВАТЬ</a>
+        </div>
+    </div>
+</section>

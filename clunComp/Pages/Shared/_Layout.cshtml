@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Киберспорт Клуб</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="navbar">
+    <div class="container">
+        <a class="navbar-brand" asp-page="/Index">
+            <span class="logo-icon"><img src="images/logo.png" style="width:20px"/></span>
+            <span class="logo-text">КИБЕРСПОРТ</span>
+        </a>
+        <nav class="nav-menu">
+            <a asp-page="/Index" class="nav-link">Главная</a>
+            <a asp-page="/Booking/Create" class="nav-link">Бронирование</a>
+            <a asp-page="/Booking/MyBookings" class="nav-link">Мои брони</a>
+            <a asp-page="/Admin/Index" class="nav-link">Админ</a>
+            <partial name="_LoginPartial"/>
+        </nav>
+    </div>
+</header>
+
+<main>
+    @RenderBody()
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">КИБЕРСПОРТ</span>
+                </div>
+                <p>Профессиональный гейминг-клуб с топовым оборудованием</p>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <p>📍 г. Москва, ул. Киберспортивная, 1</p>
+                <p>📞 +7 (999) 123-45-67</p>
+                <p>✉️ info@cybersport.ru</p>
+            </div>
+            <div class="footer-section">
+                <h4>Режим работы</h4>
+                <p>🕐 Круглосуточно</p>
+                <p>📅 Без выходных</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Киберспорт Клуб</p>
+        </div>
+    </div>
+</footer>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

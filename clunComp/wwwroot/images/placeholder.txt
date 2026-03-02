@@ -1,0 +1,9 @@
+Поместите сюда изображения:
+- hero-bg.jpg - фон главной страницы
+- zone-standard.jpg - зона стандарт
+- zone-premium.jpg - зона стандарт+
+- zone-console.jpg - зона с приставками
+- pc-standard.jpg - стандартный ПК
+- pc-premium.jpg - премиум ПК
+- ps5.jpg - PlayStation 5
+- gallery-1.jpg, gallery-2.jpg, gallery-3.jpg - фото залов
