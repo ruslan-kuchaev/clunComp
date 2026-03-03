@@ -6,12 +6,13 @@
 }
 
 <div class="my-bookings-page">
-    <div class="page-header">
-        <h1>МОИ БРОНИРОВАНИЯ</h1>
-        <a href="/Booking/Create" class="btn-primary">+ НОВАЯ БРОНЬ</a>
-    </div>
+    <div class="container">
+        <div class="page-header">
+            <h1>МОИ БРОНИРОВАНИЯ</h1>
+            <a href="/Booking/Create" class="btn-primary">+ НОВАЯ БРОНЬ</a>
+        </div>
 
-    @if (!Model.Bookings.Any())
+        @if (!Model.Bookings.Any())
     {
         <div class="empty-state">
             <div class="empty-icon">📅</div>
@@ -85,4 +86,5 @@
             }
         </div>
     }
+    </div>
 </div>

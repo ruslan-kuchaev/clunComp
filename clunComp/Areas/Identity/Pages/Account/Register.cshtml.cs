@@ -68,6 +68,9 @@ namespace clunComp.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    // Добавляем роль User для нового пользователя
+                    await _userManager.AddToRoleAsync(user, "User");
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }

@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using clunComp.Data;
 using clunComp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace clunComp.Pages.Admin;
 
+[Authorize(Roles = "Admin")]
 public class IndexModel : PageModel
 {
     private readonly ApplicationDbContext _context;
@@ -87,6 +89,66 @@ public class IndexModel : PageModel
         }
 
         computer.IsAvailable = !computer.IsAvailable;
+        await _context.SaveChangesAsync();
+
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostAddComputerAsync(string name, string zone, string specifications, decimal pricePerHour)
+    {
+        var computer = new Computer
+        {
+            Name = name,
+            Zone = zone,
+            Specifications = specifications,
+            PricePerHour = pricePerHour,
+            IsAvailable = true
+        };
+
+        _context.Computers.Add(computer);
+        await _context.SaveChangesAsync();
+
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostEditComputerAsync(int id, string name, string zone, string specifications, decimal pricePerHour)
+    {
+        var computer = await _context.Computers.FindAsync(id);
+        if (computer == null)
+        {
+            return NotFound();
+        }
+
+        computer.Name = name;
+        computer.Zone = zone;
+        computer.Specifications = specifications;
+        computer.PricePerHour = pricePerHour;
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostDeleteComputerAsync(int id)
+    {
+        var computer = await _context.Computers.FindAsync(id);
+        if (computer == null)
+        {
+            return NotFound();
+        }
+
+        // Проверяем, есть ли активные бронирования
+        var hasActiveBookings = await _context.Bookings
+            .AnyAsync(b => b.ComputerId == id && 
+                          (b.Status == BookingStatus.Pending || b.Status == BookingStatus.Confirmed));
+
+        if (hasActiveBookings)
+        {
+            // Можно добавить TempData сообщение об ошибке
+            return RedirectToPage();
+        }
+
+        _context.Computers.Remove(computer);
         await _context.SaveChangesAsync();
 
         return RedirectToPage();

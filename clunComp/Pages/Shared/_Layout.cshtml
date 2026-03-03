@@ -8,55 +8,69 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-<header class="navbar">
-    <div class="container">
+<header class="top-header">
+    <div class="header-container">
         <a class="navbar-brand" asp-page="/Index">
-            <span class="logo-icon"><img src="images/logo.png" style="width:20px"/></span>
+            <span class="logo-icon"><img src="/images/logo.png" style="width:20px"/></span>
             <span class="logo-text">КИБЕРСПОРТ</span>
         </a>
-        <nav class="nav-menu">
-            <a asp-page="/Index" class="nav-link">Главная</a>
-            <a asp-page="/Booking/Create" class="nav-link">Бронирование</a>
-            <a asp-page="/Booking/MyBookings" class="nav-link">Мои брони</a>
-            <a asp-page="/Admin/Index" class="nav-link">Админ</a>
-            <partial name="_LoginPartial"/>
-        </nav>
+        <partial name="_LoginPartial"/>
     </div>
 </header>
 
-<main>
-    @RenderBody()
-</main>
+<div class="layout-wrapper">
+    <aside class="sidebar">
+        <nav class="nav-menu">
+            <a asp-page="/Index" class="nav-link" title="Главная">Главная</a>
+            <a asp-page="/Booking/Create" class="nav-link" title="Бронирование">Бронирование</a>
+            <a asp-page="/Booking/MyBookings" class="nav-link" title="Мои брони">Мои брони</a>
+        </nav>
+    </aside>
 
-<footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <div class="footer-logo">
-                    <span class="logo-icon">⚡</span>
-                    <span class="logo-text">КИБЕРСПОРТ</span>
+    <div class="main-wrapper">
+        <main class="main-content">
+            @RenderBody()
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <div class="footer-logo">
+                            <span class="logo-icon">⚡</span>
+                            <span class="logo-text">КИБЕРСПОРТ</span>
+                        </div>
+                        <p>Профессиональный гейминг-клуб с топовым оборудованием</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Контакты</h4>
+                        <p>📍 г. Москва, ул. Киберспортивная, 1</p>
+                        <p>📞 +7 (999) 123-45-67</p>
+                        <p>✉️ info@cybersport.ru</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Режим работы</h4>
+                        <p>🕐 Круглосуточно</p>
+                        <p>📅 Без выходных</p>
+                    </div>
                 </div>
-                <p>Профессиональный гейминг-клуб с топовым оборудованием</p>
+                
+                <div class="footer-map">
+                    <h3>Как нас найти</h3>
+                    <div id="map" class="map-container"></div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Киберспорт Клуб</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>Контакты</h4>
-                <p>📍 г. Москва, ул. Киберспортивная, 1</p>
-                <p>📞 +7 (999) 123-45-67</p>
-                <p>✉️ info@cybersport.ru</p>
-            </div>
-            <div class="footer-section">
-                <h4>Режим работы</h4>
-                <p>🕐 Круглосуточно</p>
-                <p>📅 Без выходных</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Киберспорт Клуб</p>
-        </div>
+        </footer>
     </div>
-</footer>
+</div>
 
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)

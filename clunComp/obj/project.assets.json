@@ -3565,19 +3565,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Gonzo\\.nuget\\packages\\": {}
+    "/home/billy/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Gonzo\\RiderProjects\\clunComp\\clunComp\\clunComp.csproj",
+      "projectUniqueName": "/home/billy/RiderProjects/clunComp/clunComp/clunComp.csproj",
       "projectName": "clunComp",
-      "projectPath": "C:\\Users\\Gonzo\\RiderProjects\\clunComp\\clunComp\\clunComp.csproj",
-      "packagesPath": "C:\\Users\\Gonzo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Gonzo\\RiderProjects\\clunComp\\clunComp\\obj\\",
+      "projectPath": "/home/billy/RiderProjects/clunComp/clunComp/clunComp.csproj",
+      "packagesPath": "/home/billy/.nuget/packages/",
+      "outputPath": "/home/billy/RiderProjects/clunComp/clunComp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Gonzo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/billy/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -3601,7 +3601,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -3639,6 +3639,16 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[9.0.11, 9.0.11]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "version": "[9.0.11, 9.0.11]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -3647,7 +3657,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

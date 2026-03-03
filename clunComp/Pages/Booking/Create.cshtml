@@ -5,16 +5,17 @@
 }
 
 <div class="booking-page">
-    <div class="page-header">
-        <h1>ВЫБЕРИТЕ МЕСТО</h1>
-        <p class="subtitle">Забронируйте компьютер или консоль прямо сейчас</p>
-    </div>
+    <div class="container">
+        <div class="page-header">
+            <h1>ВЫБЕРИТЕ МЕСТО</h1>
+            <p class="subtitle">Забронируйте компьютер или консоль прямо сейчас</p>
+        </div>
 
-    @{
-        var zones = Model.Computers.GroupBy(c => c.Zone).OrderBy(g => g.Key == "VIP" ? 0 : g.Key == "Стандарт" ? 1 : 2);
-    }
+        @{
+            var zones = Model.Computers.GroupBy(c => c.Zone).OrderBy(g => g.Key == "VIP" ? 0 : g.Key == "Стандарт" ? 1 : 2);
+        }
 
-    @foreach (var zone in zones)
+        @foreach (var zone in zones)
     {
         <div class="zone-section">
             <div class="zone-header">
@@ -141,6 +142,7 @@
                 </div>
             </form>
         </div>
+    </div>
     </div>
 </div>
 

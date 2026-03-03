@@ -2,194 +2,260 @@
 @model clunComp.Pages.Admin.IndexModel
 @{
     ViewData["Title"] = "Админ-панель";
+    Layout = "_AdminLayout";
 }
 
-<div class="admin-page">
-    <div class="page-header">
-        <h1>АДМИН-ПАНЕЛЬ</h1>
-    </div>
-
-    <div class="admin-stats">
-        <div class="stat-card">
-            <div class="stat-icon">⏳</div>
-            <h3>@Model.PendingBookings.Count</h3>
-            <p>Ожидают подтверждения</p>
+<section class="admin-section">
+    <h2>ОЖИДАЮТ ПОДТВЕРЖДЕНИЯ</h2>
+    @if (!Model.PendingBookings.Any())
+    {
+        <div class="empty-state">
+            <p>Нет новых бронирований</p>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon">✓</div>
-            <h3>@Model.ConfirmedBookings.Count</h3>
-            <p>Подтверждено</p>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">🖥️</div>
-            <h3>@Model.Computers.Count(c => c.IsAvailable)</h3>
-            <p>Доступно мест</p>
-        </div>
-    </div>
-
-    <section class="admin-section">
-        <h2>ОЖИДАЮТ ПОДТВЕРЖДЕНИЯ</h2>
-        @if (!Model.PendingBookings.Any())
-        {
-            <div class="empty-state">
-                <p>Нет новых бронирований</p>
-            </div>
-        }
-        else
-        {
-            <div class="bookings-grid">
-                @foreach (var booking in Model.PendingBookings)
-                {
-                    <div class="booking-card admin-card">
-                        <div class="booking-header">
-                            <div class="booking-number">#@booking.Id</div>
-                            <span class="status-badge status-pending">⏳ Ожидает</span>
-                        </div>
-
-                        <div class="booking-body">
-                            <div class="booking-place">
-                                <h3>@booking.Computer?.Name</h3>
-                                <span class="zone-tag">@booking.Computer?.Zone</span>
-                            </div>
-
-                            <div class="booking-details">
-                                <div class="detail-row">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                    </svg>
-                                    <span>@booking.UserPhone</span>
-                                </div>
-                                <div class="detail-row">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                        <line x1="16" y1="2" x2="16" y2="6"/>
-                                        <line x1="8" y1="2" x2="8" y2="6"/>
-                                        <line x1="3" y1="10" x2="21" y2="10"/>
-                                    </svg>
-                                    <span>@booking.BookingDate.ToString("dd.MM.yyyy")</span>
-                                </div>
-                                <div class="detail-row">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12 6 12 12 16 14"/>
-                                    </svg>
-                                    <span>@booking.StartTime • @booking.DurationHours ч.</span>
-                                </div>
-                            </div>
-
-                            <div class="booking-price">
-                                <span class="price-label">Сумма:</span>
-                                <span class="price-value">@booking.TotalPrice₽</span>
-                            </div>
-                        </div>
-
-                        <div class="booking-actions">
-                            <form method="post" asp-page-handler="Confirm" asp-route-id="@booking.Id" style="flex: 1;">
-                                <button type="submit" class="btn-primary" style="width: 100%;">✓ ПОДТВЕРДИТЬ</button>
-                            </form>
-                            <form method="post" asp-page-handler="Cancel" asp-route-id="@booking.Id" style="flex: 1;">
-                                <button type="submit" class="btn-cancel" style="width: 100%;">✗ ОТМЕНИТЬ</button>
-                            </form>
-                        </div>
-                    </div>
-                }
-            </div>
-        }
-    </section>
-
-    <section class="admin-section">
-        <h2>ПОДТВЕРЖДЕННЫЕ БРОНИ</h2>
-        @if (!Model.ConfirmedBookings.Any())
-        {
-            <div class="empty-state">
-                <p>Нет подтвержденных бронирований</p>
-            </div>
-        }
-        else
-        {
-            <div class="bookings-grid">
-                @foreach (var booking in Model.ConfirmedBookings)
-                {
-                    <div class="booking-card admin-card status-confirmed">
-                        <div class="booking-header">
-                            <div class="booking-number">#@booking.Id</div>
-                            <span class="status-badge status-confirmed">✓ Подтверждено</span>
-                        </div>
-
-                        <div class="booking-body">
-                            <div class="booking-place">
-                                <h3>@booking.Computer?.Name</h3>
-                                <span class="zone-tag">@booking.Computer?.Zone</span>
-                            </div>
-
-                            <div class="booking-details">
-                                <div class="detail-row">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                    </svg>
-                                    <span>@booking.UserPhone</span>
-                                </div>
-                                <div class="detail-row">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                        <line x1="16" y1="2" x2="16" y2="6"/>
-                                        <line x1="8" y1="2" x2="8" y2="6"/>
-                                        <line x1="3" y1="10" x2="21" y2="10"/>
-                                    </svg>
-                                    <span>@booking.BookingDate.ToString("dd.MM.yyyy")</span>
-                                </div>
-                                <div class="detail-row">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12 6 12 12 16 14"/>
-                                    </svg>
-                                    <span>@booking.StartTime • @booking.DurationHours ч.</span>
-                                </div>
-                            </div>
-
-                            <div class="booking-price">
-                                <span class="price-label">Сумма:</span>
-                                <span class="price-value">@booking.TotalPrice₽</span>
-                            </div>
-                        </div>
-
-                        <div class="booking-actions">
-                            <form method="post" asp-page-handler="Complete" asp-route-id="@booking.Id" style="flex: 1;">
-                                <button type="submit" class="btn-secondary" style="width: 100%;">ЗАВЕРШИТЬ</button>
-                            </form>
-                            <form method="post" asp-page-handler="Cancel" asp-route-id="@booking.Id" style="flex: 1;">
-                                <button type="submit" class="btn-cancel" style="width: 100%;">ОТМЕНИТЬ</button>
-                            </form>
-                        </div>
-                    </div>
-                }
-            </div>
-        }
-    </section>
-
-    <section class="admin-section">
-        <h2>УПРАВЛЕНИЕ МЕСТАМИ</h2>
-        <div class="computers-grid">
-            @foreach (var computer in Model.Computers)
+    }
+    else
+    {
+        <div class="bookings-grid">
+            @foreach (var booking in Model.PendingBookings)
             {
-                <div class="computer-card @(!computer.IsAvailable ? "unavailable" : "")">
-                    <div class="computer-info">
-                        <div class="computer-header">
-                            <h3>@computer.Name</h3>
-                            <span class="zone-tag">@computer.Zone</span>
+                <div class="booking-card admin-card">
+                    <div class="booking-header">
+                        <div class="booking-number">#@booking.Id</div>
+                        <span class="status-badge status-pending">⏳ Ожидает</span>
+                    </div>
+
+                    <div class="booking-body">
+                        <div class="booking-place">
+                            <h3>@booking.Computer?.Name</h3>
+                            <span class="zone-tag">@booking.Computer?.Zone</span>
                         </div>
-                        <p class="specs">@computer.Specifications</p>
-                        <div class="computer-footer">
-                            <p class="price">@computer.PricePerHour₽<span>/час</span></p>
-                            <form method="post" asp-page-handler="ToggleAvailability" asp-route-id="@computer.Id">
-                                <button type="submit" class="@(computer.IsAvailable ? "btn-cancel" : "btn-primary")">
-                                    @(computer.IsAvailable ? "ОТКЛЮЧИТЬ" : "ВКЛЮЧИТЬ")
-                                </button>
-                            </form>
+
+                        <div class="booking-details">
+                            <div class="detail-row">
+                                <span>📞 @booking.UserPhone</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>📅 @booking.BookingDate.ToString("dd.MM.yyyy")</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>🕐 @booking.StartTime • @booking.DurationHours ч.</span>
+                            </div>
                         </div>
+
+                        <div class="booking-price">
+                            <span class="price-label">Сумма:</span>
+                            <span class="price-value">@booking.TotalPrice₽</span>
+                        </div>
+                    </div>
+
+                    <div class="booking-actions">
+                        <form method="post" asp-page-handler="Confirm" asp-route-id="@booking.Id" style="flex: 1;">
+                            <button type="submit" class="btn-primary" style="width: 100%;">✓ ПОДТВЕРДИТЬ</button>
+                        </form>
+                        <form method="post" asp-page-handler="Cancel" asp-route-id="@booking.Id" style="flex: 1;">
+                            <button type="submit" class="btn-cancel" style="width: 100%;">✗ ОТМЕНИТЬ</button>
+                        </form>
                     </div>
                 </div>
             }
         </div>
-    </section>
+    }
+</section>
+
+<section class="admin-section">
+    <h2>ПОДТВЕРЖДЕННЫЕ БРОНИ</h2>
+    @if (!Model.ConfirmedBookings.Any())
+    {
+        <div class="empty-state">
+            <p>Нет подтвержденных бронирований</p>
+        </div>
+    }
+    else
+    {
+        <div class="bookings-grid">
+            @foreach (var booking in Model.ConfirmedBookings)
+            {
+                <div class="booking-card admin-card status-confirmed">
+                    <div class="booking-header">
+                        <div class="booking-number">#@booking.Id</div>
+                        <span class="status-badge status-confirmed">✓ Подтверждено</span>
+                    </div>
+
+                    <div class="booking-body">
+                        <div class="booking-place">
+                            <h3>@booking.Computer?.Name</h3>
+                            <span class="zone-tag">@booking.Computer?.Zone</span>
+                        </div>
+
+                        <div class="booking-details">
+                            <div class="detail-row">
+                                <span>📞 @booking.UserPhone</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>📅 @booking.BookingDate.ToString("dd.MM.yyyy")</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>🕐 @booking.StartTime • @booking.DurationHours ч.</span>
+                            </div>
+                        </div>
+
+                        <div class="booking-price">
+                            <span class="price-label">Сумма:</span>
+                            <span class="price-value">@booking.TotalPrice₽</span>
+                        </div>
+                    </div>
+
+                    <div class="booking-actions">
+                        <form method="post" asp-page-handler="Complete" asp-route-id="@booking.Id" style="flex: 1;">
+                            <button type="submit" class="btn-secondary" style="width: 100%;">ЗАВЕРШИТЬ</button>
+                        </form>
+                        <form method="post" asp-page-handler="Cancel" asp-route-id="@booking.Id" style="flex: 1;">
+                            <button type="submit" class="btn-cancel" style="width: 100%;">ОТМЕНИТЬ</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>
+
+<section class="admin-section">
+    <div class="section-header-with-button">
+        <h2>УПРАВЛЕНИЕ МЕСТАМИ</h2>
+        <button onclick="openAddComputerModal()" class="btn-add-computer">+ ДОБАВИТЬ МЕСТО</button>
+    </div>
+    
+    <div class="computers-grid">
+        @foreach (var computer in Model.Computers)
+        {
+            <div class="computer-card @(!computer.IsAvailable ? "unavailable" : "")">
+                <div class="computer-info">
+                    <div class="computer-header">
+                        <h3>@computer.Name</h3>
+                        <span class="zone-tag">@computer.Zone</span>
+                    </div>
+                    <p class="specs">@computer.Specifications</p>
+                    <div class="computer-footer">
+                        <p class="price">@computer.PricePerHour₽<span>/час</span></p>
+                        <div class="computer-actions">
+                            <button onclick="openEditComputerModal(@computer.Id, '@computer.Name', '@computer.Zone', '@computer.Specifications', @computer.PricePerHour)" class="btn-edit">✏️</button>
+                            <form method="post" asp-page-handler="ToggleAvailability" asp-route-id="@computer.Id" style="display: inline;">
+                                <button type="submit" class="@(computer.IsAvailable ? "btn-toggle-off" : "btn-toggle-on")">
+                                    @(computer.IsAvailable ? "⏸" : "▶")
+                                </button>
+                            </form>
+                            <form method="post" asp-page-handler="DeleteComputer" asp-route-id="@computer.Id" style="display: inline;" onsubmit="return confirm('Удалить место @computer.Name?');">
+                                <button type="submit" class="btn-delete">🗑️</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+<div id="addComputerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAddComputerModal()">&times;</span>
+        <h2>ДОБАВИТЬ МЕСТО</h2>
+        <form method="post" asp-page-handler="AddComputer">
+            <div class="form-group">
+                <label>Название</label>
+                <input type="text" name="Name" class="form-control" placeholder="Например: VIP-5" required />
+            </div>
+            <div class="form-group">
+                <label>Зона</label>
+                <select name="Zone" class="form-control" required>
+                    <option value="VIP">VIP</option>
+                    <option value="Стандарт">Стандарт</option>
+                    <option value="PS">PS</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Характеристики</label>
+                <textarea name="Specifications" class="form-control" rows="3" placeholder="Например: Intel i9-14900K, RTX 4090, 64GB RAM" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Цена за час (₽)</label>
+                <input type="number" name="PricePerHour" class="form-control" placeholder="400" required />
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">ДОБАВИТЬ</button>
+                <button type="button" class="btn-secondary" onclick="closeAddComputerModal()">ОТМЕНА</button>
+            </div>
+        </form>
+    </div>
 </div>
+
+<div id="editComputerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditComputerModal()">&times;</span>
+        <h2>РЕДАКТИРОВАТЬ МЕСТО</h2>
+        <form method="post" asp-page-handler="EditComputer">
+            <input type="hidden" id="editId" name="Id" />
+            <div class="form-group">
+                <label>Название</label>
+                <input type="text" id="editName" name="Name" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label>Зона</label>
+                <select id="editZone" name="Zone" class="form-control" required>
+                    <option value="VIP">VIP</option>
+                    <option value="Стандарт">Стандарт</option>
+                    <option value="PS">PS</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Характеристики</label>
+                <textarea id="editSpecifications" name="Specifications" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Цена за час (₽)</label>
+                <input type="number" id="editPricePerHour" name="PricePerHour" class="form-control" required />
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">СОХРАНИТЬ</button>
+                <button type="button" class="btn-secondary" onclick="closeEditComputerModal()">ОТМЕНА</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openAddComputerModal() {
+            document.getElementById('addComputerModal').style.display = 'flex';
+        }
+        
+        function closeAddComputerModal() {
+            document.getElementById('addComputerModal').style.display = 'none';
+        }
+        
+        function openEditComputerModal(id, name, zone, specs, price) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editName').value = name;
+            document.getElementById('editZone').value = zone;
+            document.getElementById('editSpecifications').value = specs;
+            document.getElementById('editPricePerHour').value = price;
+            document.getElementById('editComputerModal').style.display = 'flex';
+        }
+        
+        function closeEditComputerModal() {
+            document.getElementById('editComputerModal').style.display = 'none';
+        }
+        
+        window.onclick = function(event) {
+            const addModal = document.getElementById('addComputerModal');
+            const editModal = document.getElementById('editComputerModal');
+            if (event.target == addModal) {
+                closeAddComputerModal();
+            }
+            if (event.target == editModal) {
+                closeEditComputerModal();
+            }
+        }
+    </script>
+}
+

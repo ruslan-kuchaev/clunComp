@@ -69,6 +69,14 @@ namespace clunComp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    
+                    // Проверяем, является ли пользователь админом
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    if (user != null && await _signInManager.UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return RedirectToPage("/Admin/Index");
+                    }
+                    
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
